@@ -1,7 +1,12 @@
 import random
+from Player import *
+from SakClass import *
 
-a = ['a', 'b', 'c', 'd']
-temp = random.randint(0, len(a)-1)
-print(a.pop(temp))
-print("aaaaaaaaaaaaaaaaaaa")
-print("aaaaabbbbbbbbbb")
+letters = ['A', 'A', 'A', 'A', 'B', 'B', 'C', 'C']
+
+
+for i in range(7, 1, -1):
+    print(i)
+
+
+
