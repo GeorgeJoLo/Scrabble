@@ -4,9 +4,12 @@ from SakClass import *
 
 letters = ['A', 'A', 'A', 'A', 'B', 'B', 'C', 'C']
 
+a = []
+with open('greek7.txt', 'r+') as f:
+    for line in f.readlines():
+        a.append(line.strip('\n'))
 
-for i in range(7, 1, -1):
-    print(i)
+print(a)
 
 
 

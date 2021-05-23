@@ -40,11 +40,6 @@ class Player(object):
             temp.remove(i)
         return True
 
-    @staticmethod
-    def valid_word(word):
-        # TODO check if word is in greek7.txt
-        return True
-
 
 class Human(Player):
     def play(self, sak):
@@ -81,7 +76,7 @@ class Human(Player):
             return self._check_validity(sak)
 
         # check if invalid word
-        if not Player.valid_word(word):
+        if not SakClass.valid_word(word):
             print(f'Δεν υπάρχει αυτή η λέξη!')
             return self._check_validity(sak)
 
@@ -123,7 +118,7 @@ class Computer(Player):
         for i in range(2, len(self.letters)):
             perms = permutations(self.letters, i)
             for combination in perms:
-                if self.valid_word(combination):
+                if SakClass.valid_word(combination):
                     return combination
 
     def MAX_letters(self):
@@ -134,7 +129,7 @@ class Computer(Player):
         for i in range(len(self.letters), 1, -1):
             perms = permutations(self.letters, i)
             for combination in perms:
-                if self.valid_word(combination):
+                if SakClass.valid_word(combination):
                     return combination
 
     def _SMART(self):
@@ -146,7 +141,7 @@ class Computer(Player):
         for i in range(2, len(self.letters)):
             perms = permutations(self.letters, i)
             for combination in perms:
-                if self.valid_word(combination):
+                if SakClass.valid_word(combination):
                     valid_combinations.append(combination)
         return valid_combinations
 
@@ -159,7 +154,7 @@ class Computer(Player):
         max_word = valid_combinations[0]
         max_value = SakClass.value_of_word(max_word)
         for combination in valid_combinations:
-            if max_value<SakClass.value_of_word(combination):
+            if max_value < SakClass.value_of_word(combination):
                 max_word = combination
                 max_value = SakClass.value_of_word(combination)
 

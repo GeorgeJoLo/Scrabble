@@ -7,6 +7,9 @@ class SakClass:
     def __init__(self):
         self.letters = ['A', 'A', 'A', 'A', 'B', 'B', 'C', 'C']
         self.randomize_sak()
+        self.greek7 = []
+        with open('greek7.txt', 'r') as f:
+            pass
 
     def randomize_sak(self):
         random.shuffle(self.letters)
@@ -47,3 +50,8 @@ class SakClass:
     @staticmethod
     def value_of_word(word):
         return sum([SakClass.values[letter] for letter in word])
+
+    @staticmethod
+    def valid_word(word):
+        # TODO check if word is in greek7.txt
+        return True
