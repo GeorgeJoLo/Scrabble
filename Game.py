@@ -6,8 +6,8 @@ import random
 class Game:
     def __init__(self):
         self.sak = SakClass()
-        self.player1 = Human()
-        self.player2 = Computer(algorithm=1)
+        self.human = Human()
+        self.computer = Computer(algorithm=1)
         self.playing = None
 
     def __repr__(self):
@@ -15,14 +15,24 @@ class Game:
 
     def setup(self):
         self.sak.randomize_sak()
-        self._initialize_player(self.player1)
-        self._initialize_player(self.player2)
-        self.playing = random.choice([self.player1, self.player2])
-        # TODO ...
+        self._initialize_player(self.human)
+        self._initialize_player(self.computer)
+        # self.playing = random.choice([self.human, self.computer])
+        self.playing = self.human
 
     def run(self):
-        self.playing.play(self.sak)
-        pass
+        self.setup()
+
+        while True:
+            if not self.playing.play(self.sak):
+                break
+
+            if self.playing == self.human:
+                self.playing = self.computer
+            else:
+                self.playing = self.human
+
+        self.end()
 
     def end(self):
         pass
@@ -30,5 +40,6 @@ class Game:
     def _initialize_player(self, player):
         player.take_letters(self.sak.get_letters(7))
 
-    def _write_word(self):
-        pass
+
+game = Game()
+game.run()

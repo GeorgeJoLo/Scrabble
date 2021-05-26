@@ -2,14 +2,33 @@ import random
 
 
 class SakClass:
-    values = {'A': 1, 'B': 2, 'C': 3}
-
     def __init__(self):
-        self.letters = ['A', 'A', 'A', 'A', 'B', 'B', 'C', 'C']
+        self.letters = ['Α', 'Α', 'Α', 'Α', 'Α', 'Α', 'Α', 'Α', 'Α', 'Α', 'Α', 'Α',
+                        'Β',
+                        'Γ', 'Γ',
+                        'Δ', 'Δ',
+                        'Ε', 'Ε', 'Ε', 'Ε', 'Ε', 'Ε', 'Ε', 'Ε',
+                        'Ζ',
+                        'Η', 'Η', 'Η', 'Η', 'Η', 'Η', 'Η',
+                        'Θ',
+                        'Ι', 'Ι', 'Ι', 'Ι', 'Ι', 'Ι', 'Ι', 'Ι',
+                        'Κ', 'Κ', 'Κ', 'Κ',
+                        'Λ', 'Λ', 'Λ',
+                        'Μ', 'Μ', 'Μ',
+                        'Ν', 'Ν', 'Ν', 'Ν', 'Ν', 'Ν',
+                        'Ξ',
+                        'Ο', 'Ο', 'Ο', 'Ο', 'Ο', 'Ο', 'Ο', 'Ο', 'Ο',
+                        'Π', 'Π', 'Π', 'Π',
+                        'Ρ', 'Ρ', 'Ρ', 'Ρ', 'Ρ',
+                        'Σ', 'Σ', 'Σ', 'Σ', 'Σ', 'Σ', 'Σ',
+                        'Τ', 'Τ', 'Τ', 'Τ', 'Τ', 'Τ', 'Τ', 'Τ',
+                        'Υ', 'Υ', 'Υ', 'Υ',
+                        'Φ',
+                        'Χ',
+                        'Ψ',
+                        'Ω', 'Ω', 'Ω']
+
         self.randomize_sak()
-        self.greek7 = []
-        with open('greek7.txt', 'r') as f:
-            pass
 
     def randomize_sak(self):
         random.shuffle(self.letters)
@@ -21,15 +40,12 @@ class SakClass:
         :param nof_letters: πλήθος γραμμάτων
         :return: γράμματα από τον σάκο
         """
-        if len(self.letters) >= nof_letters:
-            res = []
-            for i in range(nof_letters):
-                temp = random.randint(0, len(self.letters)-1)
-                res.append(self.letters.pop(temp))
-            return res
+        if len(self.letters) <= nof_letters:
+            return None
 
-        res = self.letters.copy()
-        self.letters = []
+        res = random.sample(self.letters, nof_letters)
+        for i in res:
+            self.letters.remove(i)
         return res
 
     def put_back_letters(self, letters_back):
@@ -42,16 +58,3 @@ class SakClass:
 
     def get_nof_letters(self):
         return len(self.letters)
-
-    @staticmethod
-    def value_of_letter(letter):
-        return SakClass.values[letter]
-
-    @staticmethod
-    def value_of_word(word):
-        return sum([SakClass.values[letter] for letter in word])
-
-    @staticmethod
-    def valid_word(word):
-        # TODO check if word is in greek7.txt
-        return True
