@@ -11,7 +11,7 @@ class Player(object):
 
     def take_letters(self, taken_letters):
         """
-        Τα γράμματα του παίκετει εμπλουτίζονται με τα taken_letters
+        Τα γράμματα του παίκτη εμπλουτίζονται με τα taken_letters
         :param taken_letters: εισερχόμενα γράμματα
         """
         self.letters.extend(taken_letters)
@@ -48,7 +48,8 @@ class Player(object):
 class Human(Player):
     def play(self, sak):
         # Εμφάνισε πληροφορίες για τα γράμματα
-        print(f"Στο σακουλάκι: {sak.get_nof_letters()} γραμματα - Παίζεις:")
+        print("----------------------------------------------------------")
+        print(f"Στο σακουλάκι: {sak.get_nof_letters()} γράμματα - Παίζεις:")
         print(f"Διαθέσιμα Γράμματα: {self.print_letters()}")
 
         word = self._check_validity(sak)
@@ -75,6 +76,8 @@ class Human(Player):
             return False
 
         super().take_letters(temp)
+        print("----------------------------------------------------------")
+        print(f"Διαθέσιμα Γράμματα: {self.print_letters()}")
         return True
 
     def _check_validity(self, sak):
@@ -98,24 +101,29 @@ class Human(Player):
 
 
 class Computer(Player):
-    def __init__(self, algorithm):
+    def __init__(self, algorithm='1'):
         super().__init__()
         self.algorithm = algorithm
 
     def play(self, sak):
         # Εμφάνισε πληροφορίες για τα γράμματα
+        print("----------------------------------------------------------")
         print(f"Στο σακουλάκι: {sak.get_nof_letters()} γραμματα - Παίζει ο Η/Υ:")
         print(f"Γράμματα Η/Υ: {self.print_letters()}")
 
         # Φτιάχνει τη λέξη
         word = ""
-        if self.algorithm == 1:
+        if self.algorithm == '1':
+            print("MIN_letters")
             word = self.MIN_letters()
-        elif self.algorithm == 2:
+        elif self.algorithm == '2':
+            print("MAX_letters")
             word = self.MAX_letters()
-        elif self.algorithm == 3:
+        elif self.algorithm == '3':
+            print("SMART")
             word = self.SUCCESS()
-        elif self.algorithm == 4:
+        elif self.algorithm == '4':
+            print("FAIL")
             word = self.FAIL()
 
         # Αν ο υπολογιστής δε μπορεί να σχηματίσει λέξη
@@ -138,10 +146,10 @@ class Computer(Player):
         Γυρνάει τη πρώτη λέξη με τα λιγότερα γράμματα
         :return:
         """
-        for i in range(2, len(self.letters)):
-            perms = permutations(self.letters, i)
-            print(list(perms))
-            # TODO ta perms na ginoun string
+        for i in range(2, len(self.letters)+1):
+            perms = [''.join(p) for p in permutations(self.letters, i)]
+            #perms = permutations(self.letters, i)
+            #print(list(perms))
             for combination in perms:
                 if WordMaster.valid_word(combination):
                     return combination
@@ -153,7 +161,7 @@ class Computer(Player):
         :return:
         """
         for i in range(len(self.letters), 1, -1):
-            perms = permutations(self.letters, i)
+            perms = [''.join(p) for p in permutations(self.letters, i)]
             for combination in perms:
                 if WordMaster.valid_word(combination):
                     return combination
@@ -166,7 +174,7 @@ class Computer(Player):
         """
         valid_combinations = []
         for i in range(2, len(self.letters)):
-            perms = permutations(self.letters, i)
+            perms = [''.join(p) for p in permutations(self.letters, i)]
             for combination in perms:
                 if WordMaster.valid_word(combination):
                     valid_combinations.append(combination)
@@ -223,7 +231,7 @@ class WordMaster:
     greek7 = {}
     try:
         with open('greek7.txt', 'r', encoding="utf-8") as f:
-            for line in f:
+            for line in f.read().splitlines():
                 greek7[line] = len(line)
     except FileNotFoundError:
         print('Δε βρέθηκε αρχείο με λέξεις! Βye!')
