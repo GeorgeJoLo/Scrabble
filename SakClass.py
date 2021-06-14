@@ -30,6 +30,8 @@ class SakClass:
 
         self.randomize_sak()
 
+    def __repr__(self):
+        return f'Class: {self.__class__}, letters = {self.letters}'
 
     def randomize_sak(self):
         """
