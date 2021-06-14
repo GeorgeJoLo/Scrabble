@@ -12,7 +12,22 @@ class Game:
         self.playing = None
 
     def __repr__(self):
-        pass
+        return f'Class: {self.__class__}, algorithm = {self.algorithm}, playing = {self.playing.__class__}'
+
+    def __str__(self):
+        """
+        Εμφανίζει την κατάσταση του παιχνιδιού αν τελείωνε την δεδομένη στηγμή.
+        """
+        if (self.computer.score > self.human.score):
+            return "Νικητής ο Η/Υ με Σκορ: " + str(self.computer.score)+'\n'\
+                   +"Σκορ Παίκτη: " + str(self.human.score)
+        elif (self.computer.score < self.human.score):
+            return "Νικητής ο Παίκτης με Σκορ: " + str(self.human.score)+'\n'\
+                   +"Σκορ Η/Υ: " + str(self.computer.score)
+        else:
+            return "Ισοπαλία"+'\n'\
+                   +"Σκορ Η/Υ: " + str(self.computer.score)+'\n'\
+                   +"Σκορ Παίκτη: " + str(self.human.score)
 
     def setup(self):
         self.sak = SakClass()
@@ -22,7 +37,6 @@ class Game:
         self._initialize_player(self.human)
         self._initialize_player(self.computer)
         self.playing = random.choice([self.human, self.computer])
-        #self.playing = self.human
 
     def menu(self):
         print("***** SCRABBLE *****")
@@ -90,22 +104,18 @@ class Game:
     def end(self):
         print("----------------------------------------------------------")
         print("Τέλος παιχνιδιού")
-        if (self.computer.score > self.human.score):
-            print("Νικητής ο Η/Υ με Σκορ: " + str(self.computer.score))
-            print("Σκορ Παίκτη: " + str(self.human.score))
-        elif (self.computer.score < self.human.score):
-            print("Νικητής ο Παίκτης με Σκορ: " + str(self.human.score))
-            print("Σκορ Η/Υ: " + str(self.computer.score))
-        else:
-            print("Ισοπαλία")
-            print("Σκορ Η/Υ: " + str(self.computer.score))
-            print("Σκορ Παίκτη: " + str(self.human.score))
+        print(self)
 
         # TODO να βαλουμε το Σκορ σε αρχειο
 
     def _initialize_player(self, player):
         player.take_letters(self.sak.get_letters(7))
 
+    def store_score(self):
+        pass
 
-game = Game()
-game.menu()
+
+
+if __name__ == '__main__':
+    game = Game()
+    game.menu()

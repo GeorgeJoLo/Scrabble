@@ -30,12 +30,16 @@ class SakClass:
 
         self.randomize_sak()
 
+
     def randomize_sak(self):
+        """
+        Ανακατεύει τα γράμματα στο σάκο.
+        """
         random.shuffle(self.letters)
 
     def get_letters(self, nof_letters):
         """
-        Ο σάκος δίνει nof_letters γράμματα. Αν δεν έχει τόσα, δίνει όσα έχει.
+        Ο σάκος δίνει nof_letters γράμματα. Αν δεν έχει τόσα, επιστρέφει None.
         Τα γράμματα αυτά βγαίνουν από το σάκο
         :param nof_letters: πλήθος γραμμάτων
         :return: γράμματα από τον σάκο
@@ -50,7 +54,7 @@ class SakClass:
 
     def put_back_letters(self, letters_back):
         """
-        Ο σάκος παίρνει και γεμίζει με τα letters_back
+        Ο σάκος παίρνει και γεμίζει με τα letters_back, και ανακατεύουμε.
         :param letters_back: γραμματα για τον σάκο
         """
         self.letters.extend(letters_back)

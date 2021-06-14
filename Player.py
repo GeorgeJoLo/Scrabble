@@ -1,7 +1,7 @@
 from itertools import permutations
 
 
-class Player(object):
+class Player:
     def __init__(self):
         self.score = 0
         self.letters = []
@@ -24,7 +24,10 @@ class Player(object):
         for i in range(len(given_letters)):
             self.letters.remove(given_letters[i])
 
-    def print_letters(self):
+    def __str__(self):
+        """
+        Εμφανίζει τα γράμματα του παίχτη.
+        """
         res = ""
         for i in self.letters:
             res = res + " " + i + "," + str(WordMaster.value_of_letter(i)) + " -"
@@ -46,11 +49,19 @@ class Player(object):
 
 
 class Human(Player):
+    """
+    Αναπαριστά τον User.
+    """
     def play(self, sak):
+        """
+        Προσομοιώνει τον γύρο παιχνιδιού του User.
+        :param sak:
+        :return: false αν τελειώσει το παιχνίδη.
+        """
         # Εμφάνισε πληροφορίες για τα γράμματα
         print("----------------------------------------------------------")
         print(f"Στο σακουλάκι: {sak.get_nof_letters()} γράμματα - Παίζεις:")
-        print(f"Διαθέσιμα Γράμματα: {self.print_letters()}")
+        print(f"Διαθέσιμα Γράμματα: {self}")
 
         word = self._check_validity(sak)
 
@@ -59,7 +70,7 @@ class Human(Player):
             sak.put_back_letters(self.letters.copy())
             super().remove_letters(self.letters.copy())
             super().take_letters(sak.get_letters(7))
-            print(f"Τα νέα σου γράμματα: {self.print_letters()}")
+            print(f"Τα νέα σου γράμματα: {self}")
             return True
 
         # Αν θέλει να σταματήσει
@@ -77,10 +88,15 @@ class Human(Player):
 
         super().take_letters(temp)
         print("----------------------------------------------------------")
-        print(f"Διαθέσιμα Γράμματα: {self.print_letters()}")
+        print(f"Διαθέσιμα Γράμματα: {self}")
         return True
 
     def _check_validity(self, sak):
+        """
+        Ελέγχει αν η είσοδος του χρήστη ειναι έγκυρη.
+        :param sak: ο σάκος με τα γράμματα.
+        :return: P ή Q ή έγκυρη λέξη.
+        """
         word = input("Λέξη: ")
         word = word.upper()
 
@@ -101,29 +117,33 @@ class Human(Player):
 
 
 class Computer(Player):
+    """
+    Αναπαριστά τον Η/Π.
+    """
     def __init__(self, algorithm='1'):
         super().__init__()
         self.algorithm = algorithm
 
     def play(self, sak):
+        """
+        Προσομοιώνει τον γύρο παιχνιδιού του Η/Π.
+        :param sak:
+        :return: false αν τελειώσει το παιχνίδη.
+        """
         # Εμφάνισε πληροφορίες για τα γράμματα
         print("----------------------------------------------------------")
         print(f"Στο σακουλάκι: {sak.get_nof_letters()} γραμματα - Παίζει ο Η/Υ:")
-        print(f"Γράμματα Η/Υ: {self.print_letters()}")
+        print(f"Γράμματα Η/Υ: {self}")
 
-        # Φτιάχνει τη λέξη
+        # Φτιάχνει τη λέξη με βάση τον αλγόριθμο.
         word = ""
         if self.algorithm == '1':
-            print("MIN_letters")
             word = self.MIN_letters()
         elif self.algorithm == '2':
-            print("MAX_letters")
             word = self.MAX_letters()
         elif self.algorithm == '3':
-            print("SMART")
             word = self.SUCCESS()
         elif self.algorithm == '4':
-            print("FAIL")
             word = self.FAIL()
 
         # Αν ο υπολογιστής δε μπορεί να σχηματίσει λέξη
@@ -148,8 +168,6 @@ class Computer(Player):
         """
         for i in range(2, len(self.letters)+1):
             perms = [''.join(p) for p in permutations(self.letters, i)]
-            #perms = permutations(self.letters, i)
-            #print(list(perms))
             for combination in perms:
                 if WordMaster.valid_word(combination):
                     return combination
@@ -223,6 +241,9 @@ class Computer(Player):
 
 
 class WordMaster:
+    """
+    Αναπαριστά ολους τους κανόνες του παιχνιδιού σχετικά με τις λέξεις.
+    """
     values = {'Α': 1, 'Β': 8, 'Γ': 4, 'Δ': 4, 'Ε': 1, 'Ζ': 10, 'Η': 1, 'Θ': 10,
               'Ι': 1, 'Κ': 2, 'Λ': 3, 'Μ': 3, 'Ν': 1, 'Ξ': 10, 'Ο': 1, 'Π': 2,
               'Ρ': 2, 'Σ': 1, 'Τ': 1, 'Υ': 2, 'Φ': 8, 'Χ': 8, 'Ψ': 10, 'Ω': 3}
@@ -239,12 +260,24 @@ class WordMaster:
 
     @staticmethod
     def value_of_letter(letter):
+        """
+        :param letter: Ένα γράμμα.
+        :return: η αξία του.
+        """
         return WordMaster.values[letter]
 
     @staticmethod
     def value_of_word(word):
+        """
+        :param letter: μια λέξη.
+        :return: η αξία της.
+        """
         return sum([WordMaster.values[letter] for letter in word])
 
     @staticmethod
     def valid_word(word):
+        """
+        :param word: μια λέξη.
+        :return: true , αν υπάρχει μια τέτοια λέξη.
+        """
         return word in WordMaster.greek7
