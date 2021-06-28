@@ -1,4 +1,5 @@
 from classes import Game
 
-game = Game()
-game.menu()
+if __name__ == '__main__':
+    game = Game()
+    game.menu()
