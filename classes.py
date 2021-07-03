@@ -58,6 +58,7 @@ class Human(Player):
     """
     Αναπαριστά τον User.
     """
+
     def play(self, sak):
         """
         Προσομοιώνει τον γύρο παιχνιδιού του User.
@@ -126,6 +127,7 @@ class Computer(Player):
     """
     Αναπαριστά τον Η/Π.
     """
+
     def __init__(self, algorithm='1'):
         super().__init__()
         self.algorithm = algorithm
@@ -172,7 +174,7 @@ class Computer(Player):
         Γυρνάει τη πρώτη λέξη με τα λιγότερα γράμματα
         :return:
         """
-        for i in range(2, len(self.letters)+1):
+        for i in range(2, len(self.letters) + 1):
             perms = [''.join(p) for p in permutations(self.letters, i)]
             for combination in perms:
                 if WordMaster.valid_word(combination):
@@ -276,7 +278,7 @@ class WordMaster:
     @staticmethod
     def value_of_word(word):
         """
-        :param letter: μια λέξη.
+        :param word: μια λέξη.
         :return: η αξία της.
         """
         return sum([WordMaster.values[letter] for letter in word])
@@ -354,6 +356,7 @@ class SakClass:
     def get_nof_letters(self):
         return len(self.letters)
 
+
 class Game:
     def __init__(self):
         self.sak = SakClass()
@@ -372,15 +375,15 @@ class Game:
         Εμφανίζει την κατάσταση του παιχνιδιού αν τελείωνε την δεδομένη στηγμή.
         """
         if self.winner == self.computer:
-            return "Νικητής ο Η/Υ με Σκορ: " + str(self.computer.score)+'\n'\
-                   +"Σκορ Παίκτη: " + str(self.human.score)
+            return "Νικητής ο Η/Υ με Σκορ: " + str(self.computer.score) + '\n' \
+                   + "Σκορ Παίκτη: " + str(self.human.score)
         elif self.winner == self.human:
-            return "Νικητής ο Παίκτης με Σκορ: " + str(self.human.score)+'\n'\
-                   +"Σκορ Η/Υ: " + str(self.computer.score)
+            return "Νικητής ο Παίκτης με Σκορ: " + str(self.human.score) + '\n' \
+                   + "Σκορ Η/Υ: " + str(self.computer.score)
         else:
-            return "Ισοπαλία"+'\n'\
-                   +"Σκορ Η/Υ: " + str(self.computer.score)+'\n'\
-                   +"Σκορ Παίκτη: " + str(self.human.score)
+            return "Ισοπαλία" + '\n' \
+                   + "Σκορ Η/Υ: " + str(self.computer.score) + '\n' \
+                   + "Σκορ Παίκτη: " + str(self.human.score)
 
     def setup(self):
         """
